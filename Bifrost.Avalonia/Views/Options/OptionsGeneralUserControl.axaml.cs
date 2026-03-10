@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using Bifrost.Avalonia.Views.Dialogs;
 using Bifrost.Core.ClientManagement;
 using Bifrost.Core.Models;
+using System;
 
 namespace Bifrost.Avalonia.Views.Options;
 
@@ -26,6 +27,21 @@ public partial class OptionsGeneralUserControl : OptionsUserControl
         CustomResolutionXTextBox.Text = config.CustomResolutionX.ToString();
         CustomResolutionYTextBox.Text = config.CustomResolutionY.ToString();
         EnableCustomResolutionTextBoxes(config.ForceCustomResolution);
+
+        EnableLocaleOverrideCheckBox.IsChecked = config.EnableLocaleOverride;
+
+        LocaleOverrideComboBox.Items.Clear();
+        for (int i = 0; i < clientLauncher.Locales.Length; i++)
+        {
+            string locale = clientLauncher.Locales[i];
+
+            ComboBoxItem localeItem = new() { Content = locale, Tag = locale };
+            LocaleOverrideComboBox.Items.Add(localeItem);
+
+            if (string.Equals(locale, config.LocaleOverride, StringComparison.OrdinalIgnoreCase))
+                LocaleOverrideComboBox.SelectedIndex = i;
+        }
+        LocaleOverrideComboBox.IsEnabled = config.EnableLocaleOverride;
 
         EnableAutoLoginCheckBox.IsChecked = config.EnableAutoLogin;
         AutoLoginEmailAddressTextBox.Text = config.AutoLoginEmailAddress;
@@ -70,6 +86,11 @@ public partial class OptionsGeneralUserControl : OptionsUserControl
         config.CustomResolutionX = int.Parse(CustomResolutionXTextBox.Text.Trim());
         config.CustomResolutionY = int.Parse(CustomResolutionYTextBox.Text.Trim());
 
+        config.EnableLocaleOverride = EnableLocaleOverrideCheckBox.IsChecked == true;
+        int localeOverrideIndex = LocaleOverrideComboBox.SelectedIndex;
+        if (localeOverrideIndex != -1)
+            config.LocaleOverride = (string)((ComboBoxItem)LocaleOverrideComboBox.Items[localeOverrideIndex]).Tag;
+
         config.EnableAutoLogin = EnableAutoLoginCheckBox.IsChecked == true;
         config.AutoLoginEmailAddress = AutoLoginEmailAddressTextBox.Text;
         config.AutoLoginPassword = AutoLoginPasswordTextBox.Text;
@@ -97,6 +118,14 @@ public partial class OptionsGeneralUserControl : OptionsUserControl
             return;
 
         EnableCustomResolutionTextBoxes(checkBox.IsChecked == true);
+    }
+
+    private void OverrideLocaleCheckBox_IsCheckedChanged(object sender, RoutedEventArgs e)
+    {
+        if (sender is not CheckBox checkBox)
+            return;
+
+        LocaleOverrideComboBox.IsEnabled = checkBox.IsChecked == true;
     }
 
     private async void EnableAutoLoginCheckBox_IsCheckedChanged(object sender, RoutedEventArgs e)

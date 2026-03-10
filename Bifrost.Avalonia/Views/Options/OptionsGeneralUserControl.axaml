@@ -21,6 +21,13 @@
             </Grid>
         </HeaderedContentControl>
 
+        <HeaderedContentControl Header="Locale">
+            <Grid ColumnDefinitions="auto *">
+                <CheckBox Grid.Column="0" Content="Override Locale" x:Name="EnableLocaleOverrideCheckBox" IsCheckedChanged="OverrideLocaleCheckBox_IsCheckedChanged" />
+                <ComboBox Grid.Column="1" x:Name="LocaleOverrideComboBox" />
+            </Grid>
+        </HeaderedContentControl>
+
         <HeaderedContentControl Header="Auto-Login">
             <Grid ColumnDefinitions="auto *" RowDefinitions="auto auto auto">
                 <CheckBox Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" x:Name="EnableAutoLoginCheckBox" IsCheckedChanged="EnableAutoLoginCheckBox_IsCheckedChanged" Content="Enable Auto-Login" />
