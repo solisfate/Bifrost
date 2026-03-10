@@ -27,6 +27,7 @@ namespace Bifrost.Core.ClientManagement
 
         public bool IsInitialized { get; private set; } = false;
         public ClientMetadata ClientMetadata { get; private set; } = ClientMetadata.Unknown;
+        public string[] Locales { get; private set; } = Array.Empty<string>();
 
         public ClientDirectory()
         {
@@ -56,6 +57,13 @@ namespace Bifrost.Core.ClientManagement
             // Find client metadata and detect Win64 support
             ClientMetadata = GetClientMetadata(_executableDirectory32, _executableName);
             Supports64 = Directory.Exists(_executableDirectory64) && File.Exists(Path.Combine(_executableDirectory64, _executableName));
+
+            // Find locales
+            string localeDirectory = Path.Combine(_directoryPath, "Data", "Game", "Loco");
+            if (Directory.Exists(localeDirectory))
+                Locales = [.. Directory.GetFiles(localeDirectory, "*.locale", SearchOption.TopDirectoryOnly).Select(Path.GetFileNameWithoutExtension)];
+            else
+                Locales = Array.Empty<string>();
 
             // Finish initialization
             IsInitialized = true;

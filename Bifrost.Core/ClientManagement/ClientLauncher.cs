@@ -27,6 +27,7 @@ namespace Bifrost.Core.ClientManagement
         public GuiConfig GuiConfig { get; private set; }
 
         public ClientMetadata ClientMetadata { get => _clientDirectory.ClientMetadata; }
+        public string[] Locales { get => _clientDirectory.Locales; }
 
         public ClientLauncher()
         {

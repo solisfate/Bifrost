@@ -76,7 +76,10 @@ namespace Bifrost.Core.Models
         public bool ForceCustomResolution { get; set; } = false;
         public int CustomResolutionX { get; set; } = 1920;
         public int CustomResolutionY { get; set; } = 1080;
-        
+
+        public bool EnableLocaleOverride { get; set; } = false;
+        public string LocaleOverride { get; set; } = "eng.all";
+
         public bool EnableAutoLogin { get; set; } = false;
         public string AutoLoginEmailAddress { get; set; } = "test1@test.com";
         public string AutoLoginPassword { get; set; } = "123";
@@ -159,6 +162,9 @@ namespace Bifrost.Core.Models
                 argumentList.Add($"-ResX={CustomResolutionX}");
                 argumentList.Add($"-ResY={CustomResolutionY}");
             }
+
+            if (EnableLocaleOverride)
+                argumentList.Add($"-locale={LocaleOverride}");
 
             if (EnableAutoLogin)
             {
