@@ -76,6 +76,7 @@ namespace Bifrost.Core.Models
         public bool ForceCustomResolution { get; set; } = false;
         public int CustomResolutionX { get; set; } = 1920;
         public int CustomResolutionY { get; set; } = 1080;
+        public bool NoHomeDirectory { get; set; } = false;
 
         public bool EnableLocaleOverride { get; set; } = false;
         public string LocaleOverride { get; set; } = "eng.all";
@@ -162,6 +163,9 @@ namespace Bifrost.Core.Models
                 argumentList.Add($"-ResX={CustomResolutionX}");
                 argumentList.Add($"-ResY={CustomResolutionY}");
             }
+
+            if (NoHomeDirectory)
+                argumentList.Add("-nohomedir");
 
             if (EnableLocaleOverride)
                 argumentList.Add($"-locale={LocaleOverride}");

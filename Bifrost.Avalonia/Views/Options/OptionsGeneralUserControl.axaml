@@ -7,7 +7,7 @@
 
     <StackPanel>
         <HeaderedContentControl Header="Engine">
-            <Grid ColumnDefinitions="auto auto" RowDefinitions="auto auto auto">
+            <Grid ColumnDefinitions="auto auto" RowDefinitions="auto auto auto auto">
                 <CheckBox Grid.Column="0" Grid.Row="0" x:Name="SkipStartupMoviesCheckBox" Content="Skip Startup Movies" />
                 
                 <CheckBox Grid.Column="0" Grid.Row="1" x:Name="NoSplashCheckBox" Content="Hide Splash Screen" />
@@ -18,6 +18,8 @@
                     <Label VerticalAlignment="Center" Content="x" />
                     <TextBox Width="48" x:Name="CustomResolutionYTextBox" MaxLength="5" />
                 </StackPanel>
+
+                <CheckBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" x:Name="NoHomeDirectoryCheckBox" Content="Keep User Data in Installation Directory" />
             </Grid>
         </HeaderedContentControl>
 

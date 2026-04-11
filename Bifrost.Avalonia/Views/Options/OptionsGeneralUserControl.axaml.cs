@@ -28,6 +28,8 @@ public partial class OptionsGeneralUserControl : OptionsUserControl
         CustomResolutionYTextBox.Text = config.CustomResolutionY.ToString();
         EnableCustomResolutionTextBoxes(config.ForceCustomResolution);
 
+        NoHomeDirectoryCheckBox.IsChecked = config.NoHomeDirectory;
+
         EnableLocaleOverrideCheckBox.IsChecked = config.EnableLocaleOverride;
 
         LocaleOverrideComboBox.Items.Clear();
@@ -85,6 +87,8 @@ public partial class OptionsGeneralUserControl : OptionsUserControl
         config.ForceCustomResolution = ForceCustomResolutionCheckBox.IsChecked == true;
         config.CustomResolutionX = int.Parse(CustomResolutionXTextBox.Text.Trim());
         config.CustomResolutionY = int.Parse(CustomResolutionYTextBox.Text.Trim());
+
+        config.NoHomeDirectory = NoHomeDirectoryCheckBox.IsChecked == true;
 
         config.EnableLocaleOverride = EnableLocaleOverrideCheckBox.IsChecked == true;
         int localeOverrideIndex = LocaleOverrideComboBox.SelectedIndex;
